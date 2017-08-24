@@ -1,33 +1,45 @@
 var publicPath = '';
 var host = '';
 var desc = '';
-var port = 80; // ø™∑¢ª∑æ≥:80, ∑¬’Ê:443
+var port = 80; // http:80, https:443
 var hosts = {
     dev: 'js.dev.meixincdn.com',
-    prd: 'js-pre.meixincdn.com'
+    prd: 'js-pre.meixincdn.com',
+    online:'js.meixincdn.com'
 };
+var protoHost='';
 var pathname = '';
 
 var regString = process.argv.join('');
 
+//ÂºÄÂèë
 if(regString.indexOf('mx-dev')!= -1){
 
     host = hosts.dev;
-    desc = '°æø™∑¢ª∑æ≥°ø,«Î∞Û∂®: ';
+    desc = 'dev: ';
     port = 80;
-	pathname = '/CDN8053/'
+	pathname = '/CDN8053/';
+	protoHost= host;
+//‰ªøÁúü
 }  else if (regString.indexOf('mx-prd')!= -1) {
+
     host = hosts.prd;	
-    desc = '°æ∑¬’Ê°ø,«Î∞Û∂®: ';
+    desc = 'prd: ';
 	port = 443;
 	pathname = '/m/pc/';
-	
-}
+	protoHost= 'https://'+ host;
+//Á∫ø‰∏ä	
+}else if(regString.indexOf('mx-online')!= -1){
 
-publicPath = host + pathname;
+	host = hosts.online;	
+    desc = 'online: ';
+	port = 443;
+	protoHost= 'https://'+ host;
+
+}
 
 module.exports = {
 	host: host,
 	port: port,
-	publicPath: publicPath
+	protoHost: protoHost
 }

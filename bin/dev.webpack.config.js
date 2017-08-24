@@ -25,7 +25,7 @@ var dist = paths.dist;
 
 var exp = {
 	//source-map
-	//devtool: 'cheap-module-eval-source-map',
+	devtool: 'cheap-module-eval-source-map',
 	//入口
 	entry:getEntry(),
 	//出口
@@ -37,7 +37,7 @@ var exp = {
 
     //本地服务
     devServer:{ 
-    	inline:false,
+    	inline:true,//自动更新浏览器
 		publicPath: '/dist',
 		host:env.host,	//域名
         port:env.port,	//端口
@@ -77,8 +77,7 @@ var exp = {
             },
 			//sass
 			{
-				test: /\.scss$/,  
-				exclude: /node_modules/,   
+				test: /\.scss$/,     
 				use: ExtractTextPlugin.extract({
 					fallback: "style-loader",
 					use: "css-loader!sass-loader",
@@ -88,7 +87,7 @@ var exp = {
 			//pug
 			{
 				test: /\.pug$/,
-				exclude: '/node_modules/',	//不执行
+				//exclude: '/node_modules/',	//不执行
 				include:paths.pug,
 				loader:"pug-loader",
 				query:{
@@ -98,30 +97,22 @@ var exp = {
 			//tpl
 			{
 				test: /\.tpl$/,
-				exclude: /node_modules/,
 				include: paths.page,
 				loader: 'tmodjs-loader'
 			},
 			//images
 			{
 				test: /\.(png|jpg|gif)$/,
-				exclude: /node_modules/,
 				include:paths.images,
 				loader: 'url-loader',
 				options:{
 					//相对路径： 不生成image
-					/*
 					limit:1,
 					publicPath:'',	//  		重新指定目录
 					name: '[name].[ext]',
 					context:paths.src,
 					useRelativePath:true	//相对路径写法
-					*/
-					//绝对路径
-					limit:1,
-					publicPath:'//js.meixincdn.com/pc/m/dist/',
-					context:paths.src,
-					name: '[path][name].[ext]?v=[hash:4]'
+					
 
 				}
 			 }
@@ -143,10 +134,10 @@ var exp = {
         }),
 
 		new ExtractTextPlugin('css/module/[name].css'),
-		/*new TransferWebpackPlugin([{
+		new TransferWebpackPlugin([{
             from: 'src/images',
             to: 'images'
-        }]),*/
+        }]),
 		
 		//自动加载模块
 		new webpack.ProvidePlugin({

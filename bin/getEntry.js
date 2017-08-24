@@ -12,8 +12,7 @@ var entry = {
 var getEntry = function(){
 	var pages = fs.readdirSync(pagePath);
 	pages.forEach(function(dir, index, arr) {
-		console.log(arr,index,1)
-	    if (dir.indexOf('.') !== 0) { // .svnµÄÒþ²ØÄ¿Â¼
+	    if (dir.indexOf('.') !== 0) { // .svnç­‰ç›®å½•
 	        entry[dir] = path.join(pagePath, dir, 'index.js');
 	    }
 	});

@@ -1,10 +1,11 @@
 //var React = require("react");
 //var ReactDOM = require('react-dom');
-var Template = require('./reactTest.js');
-
-
-ReactDOM.render(
-  <Template title={6666}/>,
+require('scss/module/test2.scss');
+var Template = require('./reactTemplate.js');
+require('../test3/index.js');
+	ReactDOM.render(
+  <Template title={'12345'}/>,
   document.getElementById('demo')
 );
+
 
